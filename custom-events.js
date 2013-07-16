@@ -9,10 +9,16 @@
         return _.template( $('#' + id).html() );
     };
 
-    App.Models.Task = Backbone.Model.extend({});
+    App.Models.Task = Backbone.Model.extend({
+      validate: function(attrs) {
+        if ( ! $.trim(attrs.title) ) {
+          return 'invalid';
+        }
+      }
+    });
 
     App.Collections.Tasks = Backbone.Collection.extend({
-      model: App.Models.Task,
+      model: App.Models.Task
     });
 
     App.Views.Tasks = Backbone.View.extend({
@@ -37,14 +43,18 @@
 
       template: template('taskTemplate'),
 
+      initialize: function() {
+          this.model.on('change', this.render, this);
+      },
+
       events: {
         'click .edit': 'editTask'
-
       },
 
       editTask: function() {
-        var newTask = prompt('WHAT?', this.model.get('title'));
-        this.model.set('title', newTask.title);
+        var newTaskTitle = prompt('WHAT?', this.model.get('title'));
+        if ( ! newTaskTitle) return;
+        this.model.set({'title': newTaskTitle}, {validate: true});
       },
 
       render: function() {

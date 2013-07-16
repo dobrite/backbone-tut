@@ -5,9 +5,17 @@
   <title></title>
 </head>
 <body>
+
+  <h1></h1>
+  <div class="tasks">
+    <script id="taskTemplate" type="text/template">
+      <span><%= title %></span> <button class="edit">Edit</button> <button class="delete">Delete</button>
+    </script>
+  </div>
+
   <script src="js/underscore.js"></script>
   <script src="js/jquery.js"></script>
   <script src="js/backbone.js"></script>
-  <script src="external-templates.js"></script>
+  <script src="custom-events.js"></script>
 </body>
 </html>
